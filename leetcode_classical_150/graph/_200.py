@@ -45,8 +45,14 @@ grid[i][j] 的值为 '0' 或 '1'
 每完成一次深度优先搜索，就意味着找到了一个岛屿，岛屿数量加 1
 """
 
+"""
+DFS：找到起点，开始搜索（压入栈），识别是否可用（弹出栈，然后识别），可用就标记，继续搜索邻居（把邻居压入栈）
+"""
+
+
 from typing import List
 
+# DFS的递归形式
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         if not grid or not grid[0]:
@@ -76,3 +82,37 @@ class Solution:
                     count += 1
 
         return count
+    
+# DFS的栈形式
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        
+        rows,cols = len(grid),len(grid[0])
+        count = 0
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == '1':
+                    stack = [(r, c)]
+                    while stack:
+                        # 弹出栈顶元素
+                        row, col = stack.pop()
+                        # pop方法用于移除列表中指定位置的元素，并返回该元素的值。
+                        # 若不指定位置，默认移除并返回列表的最后一个元素。
+                        # 检查坐标是否越界、当前位置不是陆地或已访问
+                        if row < 0 or row >= rows or col < 0 or col >= cols or grid[row][col] != '1':
+                            continue
+                        # 将当前陆地标记为已访问，这里使用 '-1'
+                        grid[row][col] = '-1'
+                        # 将当前位置的上下左右加入栈中
+                        stack.extend([(row - 1, col), (row + 1, col), (row, col - 1), (row, col + 1)])
+                        # extend方法用于在列表的末尾一次性追加另一个可迭代对象（如列表、元组、字符串等）中的所有元素。
+                    # 完成一次搜索，岛屿数量加 1
+                    count += 1
+        return count
+
+                    
+        
+        

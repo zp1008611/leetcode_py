@@ -49,6 +49,7 @@ board[i][j] 为 'X' 或 'O'
 岛屿数量的搜索出发点不限，但是这个问题的出发点是边界处出发开始搜索
 """
 
+
 from typing import List
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
